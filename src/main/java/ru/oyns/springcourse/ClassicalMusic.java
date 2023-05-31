@@ -1,6 +1,9 @@
 package ru.oyns.springcourse;
 
-public class ClassicalMusic implements Music{
+import org.springframework.stereotype.Component;
+
+@Component
+public class ClassicalMusic implements Music {
     @Override
     public String getSong() {
         return "Sonata no. 11";
