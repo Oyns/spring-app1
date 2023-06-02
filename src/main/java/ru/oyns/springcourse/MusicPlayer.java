@@ -1,38 +1,30 @@
 package ru.oyns.springcourse;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 
 public class MusicPlayer {
-
     @Value("${musicPlayer.name}")
     private String name;
-
     @Value("${musicPlayer.volume}")
     private int volume;
 
-    public String getName() {
-        return name;
+    private final List<Music> music;
+
+    public MusicPlayer(List<Music> music) {
+        this.music = music;
     }
 
-    public int getVolume() {
-        return volume;
-    }
-
-    private final Music music1;
-    private final Music music2;
-
-
-    public MusicPlayer(@Qualifier("rockMusic") Music music1,
-                       @Qualifier("classicalMusic") Music music2) {
-        this.music1 = music1;
-        this.music2 = music2;
+    public List<Music> getMusic() {
+        return music;
     }
 
     public String playMusic() {
-        return "Playing: " + Arrays.toString(music1.getSong()) + ", " + Arrays.toString(music2.getSong());
+        Random random = new Random();
+        return "Playing: " + getMusic().get(random.nextInt(music.size())).getSong() + " with volume " + this.volume
+                + " for master " + this.name;
     }
 }
